@@ -14,11 +14,17 @@ interface TeamMember {
   name: string;
   role: string;
   image: string;
+  priority?: boolean;
 }
 
 export const teamMembers: TeamMember[] = [
+  {
+    name: "विनोद राज जोशी",
+    role: "अध्यक्ष",
+    image: SabhapatiImage,
+    priority: true, // Add priority for smaller devices
+  },
   { name: "अञ्जन बस्नेत", role: "सचिव", image: SachivImage },
-  { name: "विनोद राज जोशी", role: "अध्यक्ष", image: SabhapatiImage },
   { name: "शारदा पौडेल (सिमा)", role: "कोषाध्यक्ष", image: KosaadakshyaImage },
   { name: "शेखर रोकाया", role: "सदस्य", image: SekharSadasya },
   {

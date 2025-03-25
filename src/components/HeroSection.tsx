@@ -48,6 +48,25 @@ const HeroSection: React.FC = () => {
     },
   ];
 
+  // Organize Leadership Members
+  const getLeadershipMembers = () => {
+    // Separate priority and non-priority leadership members
+    const priorityMember = teamMembers.find((member) => member.priority);
+    const leadershipMembers = teamMembers.filter((member) =>
+      ["सचिव", "अध्यक्ष", "कोषाध्यक्ष"].includes(member.role)
+    );
+
+    // Remove priority member from current position if exists
+    const filteredMembers = leadershipMembers.filter(
+      (member) => member.name !== priorityMember?.name
+    );
+
+    // Return members with priority member potentially added later
+    return priorityMember
+      ? [priorityMember, ...filteredMembers]
+      : leadershipMembers;
+  };
+
   return (
     <section
       className="relative bg-gradient-to-br from-emerald-950 to-rose-950 
@@ -193,38 +212,46 @@ const HeroSection: React.FC = () => {
               className="space-y-12"
             >
               {/* Top Tier: Leadership */}
-              <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center">
-                {teamMembers
-                  .filter((member) =>
-                    ["सचिव", "अध्यक्ष", "कोषाध्यक्ष"].includes(member.role)
-                  )
-                  .map((member, index) => (
-                    <motion.div
-                      key={index}
-                      whileHover={{ scale: 1.05 }}
-                      className={`
-                        bg-white/10 backdrop-blur-md border border-white/20 w-full
-                        rounded-2xl p-6 text-center shadow-xl transition-all
-                        ${member.role === "अध्यक्ष" ? "scale-110" : ""}
-                      `}
-                    >
-                      <div className="mx-auto w-40 h-40 mb-4 relative group">
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className="w-full h-full object-cover object-top rounded-full 
-                                     border-4 border-emerald-500/50 grayscale-0 
-                                     transition-all duration-300"
-                        />
-                      </div>
-                      <h3 className="text-xl font-bold text-white tracking-tight">
-                        {member.name}
-                      </h3>
-                      <p className="text-sm text-rose-200 uppercase tracking-widest">
-                        {member.role}
-                      </p>
-                    </motion.div>
-                  ))}
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center 
+                           sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {getLeadershipMembers().map((member, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.05 }}
+                    className={`
+                      bg-white/10 backdrop-blur-md border border-white/20 w-full
+                      rounded-2xl p-6 text-center shadow-xl transition-all
+                      ${
+                        member.priority
+                          ? "md:col-span-full lg:col-span-1 sm:order-first md:order-1"
+                          : member.role === "कोषाध्यक्ष"
+                          ? "sm:order-2 md:order-first"
+                          : member.role === "सचिव"
+                          ? "sm:order-3 md-order-3"
+                          : ""
+                      }
+                      ${member.role === "अध्यक्ष" ? "scale-110" : ""}
+                    `}
+                  >
+                    <div className="mx-auto w-40 h-40 mb-4 relative group">
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover object-top rounded-full 
+                               border-4 border-emerald-500/50 grayscale-0 
+                               transition-all duration-300"
+                      />
+                    </div>
+                    <h3 className="text-xl font-bold text-white tracking-tight">
+                      {member.name}
+                    </h3>
+                    <p className="text-sm text-rose-200 uppercase tracking-widest">
+                      {member.role}
+                    </p>
+                  </motion.div>
+                ))}
               </motion.div>
 
               {/* Sadasya Members */}
@@ -240,16 +267,16 @@ const HeroSection: React.FC = () => {
                         key={index}
                         whileHover={{ scale: 1.05 }}
                         className="bg-white/5 backdrop-blur-md border border-white/10 
-                                   rounded-xl p-4 text-center shadow-lg transition-all 
-                                   hover:bg-white/10 w-full"
+                               rounded-xl p-4 text-center shadow-lg transition-all 
+                               hover:bg-white/10 w-full"
                       >
                         <div className="relative mx-auto w-28 h-28 mb-3">
                           <img
                             src={member.image}
                             alt={member.name}
                             className="w-full h-full object-cover object-top rounded-full 
-                                       border-3 border-emerald-500/30 grayscale-0 
-                                       transition-all"
+                                   border-3 border-emerald-500/30 grayscale-0 
+                                   transition-all"
                           />
                         </div>
                         <h3 className="text-base font-semibold text-white truncate">
