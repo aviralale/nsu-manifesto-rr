@@ -27,7 +27,7 @@ const Header: React.FC = () => {
                        transition-all shadow-md flex gap-2"
           >
             <motion.img
-              src={NSULogo}
+              src={CongressLogo}
               alt="Nepal Students' Union"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
               className="h-12 w-auto rounded-full shadow-md"
             />
             <motion.img
-              src={CongressLogo}
+              src={NSULogo}
               alt="Nepal Students' Union"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
