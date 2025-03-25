@@ -101,7 +101,7 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
                 download
                 className="text-blue-600 underline ml-2"
               >
-                Download the manifesto
+                See More...
               </a>
             </p>
           </div>
