@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Kalimati";
-  src: url("/path/to/Kalimati.ttf") format("truetype");
+  src: url("./assets/fonts/Kalimati\ Regular.otf") format("truetype");
 }
 
 .kalimati {

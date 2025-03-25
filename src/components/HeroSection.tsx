@@ -260,7 +260,7 @@ const HeroSection: React.FC = () => {
 
               {/* Sadasya Members */}
               <div className="mt-12">
-                <h2 className="text-2xl font-bold text-center mb-8 text-emerald-200">
+                <h2 className="text-2xl font-bold kalimati text-center mb-8 text-emerald-200">
                   प्रत्यक्ष तर्फ सदस्यहरू
                 </h2>
                 <motion.div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
