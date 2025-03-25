@@ -1,0 +1,17 @@
+@import "tailwindcss";
+body {
+  /* @apply bg-background text-gray-800 font-sans; */
+}
+
+.container {
+  @apply max-w-6xl mx-auto px-4;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

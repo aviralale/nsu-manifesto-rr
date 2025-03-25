@@ -1,0 +1,64 @@
+import React from "react";
+import { motion } from "framer-motion";
+import NSULogo from "../assets/images/logo.jpg";
+
+const LoadingScreen: React.FC = () => {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-emerald-950 to-rose-950 text-white relative overflow-hidden">
+      {/* Subtle Background Animation */}
+      <div className="absolute inset-0 bg-pattern opacity-10 pointer-events-none" />
+
+      {/* Rotating Border Container */}
+      <motion.div
+        className="relative w-64 h-64 border-8 border-dashed border-transparent border-t-emerald-500 border-b-rose-500 rounded-full"
+        initial={{ opacity: 0, rotate: 0 }}
+        animate={{
+          opacity: 1,
+          rotate: 360,
+          transition: {
+            duration: 2,
+            repeat: Infinity,
+            ease: "linear",
+          },
+        }}
+      >
+        {/* Static Image */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.img
+            src={NSULogo}
+            alt="Loading Image"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{
+              scale: 1,
+              opacity: 1,
+              transition: {
+                duration: 0.5,
+                type: "spring",
+                stiffness: 120,
+              },
+            }}
+            className="w-56 h-56 object-cover rounded-full shadow-2xl border-4 border-white/20"
+          />
+        </div>
+      </motion.div>
+
+      {/* Loading Text */}
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: {
+            delay: 0.5,
+            duration: 0.5,
+          },
+        }}
+        className="mt-8 text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-rose-300"
+      >
+        Nepal Students' Union
+      </motion.p>
+    </div>
+  );
+};
+
+export default LoadingScreen;
