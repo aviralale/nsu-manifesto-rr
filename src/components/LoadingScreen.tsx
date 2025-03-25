@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import NSULogo from "../assets/images/logo.jpg";
+import NSULogo from "../assets/images/logo.jpeg";
 
 // Hashtag for social media and movement
 const HASHTAG = "#परिवर्तनसम्भवछ";

@@ -1,13 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  X,
-  Download,
-  Expand,
-  Minimize,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { X, Download, Expand, Minimize } from "lucide-react";
 import ManifestoPDF from "../assets/pdfs/election-manifesto.pdf";
 
 interface PDFModalProps {
@@ -17,81 +10,18 @@ interface PDFModalProps {
 
 export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const pdfObjectRef = useRef<HTMLObjectElement>(null);
 
   // Keyboard Navigation
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!isOpen) return;
-
       if (event.key === "Escape") {
         onClose();
       }
-
-      // Add page navigation for left and right arrow keys
-      if (event.key === "ArrowLeft") {
-        handlePreviousPage();
-      }
-
-      if (event.key === "ArrowRight") {
-        handleNextPage();
-      }
     };
-
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, currentPage, totalPages]);
-
-  // Detect total pages and current page
-  useEffect(() => {
-    const handlePDFLoad = () => {
-      if (pdfObjectRef.current) {
-        const pdfDocument = pdfObjectRef.current.contentDocument;
-        if (pdfDocument) {
-          // Use PDF.js if available for more accurate page detection
-          if ((window as any).pdfjsLib) {
-            (window as any).pdfjsLib
-              .getDocument(ManifestoPDF)
-              .promise.then((pdf: any) => {
-                setTotalPages(pdf.numPages);
-              });
-          } else {
-            // Fallback method (less accurate)
-            setTotalPages(
-              pdfDocument.getElementsByTagName("page").length || 10
-            );
-          }
-        }
-      }
-    };
-
-    if (isOpen) {
-      // Attempt to load PDF and detect pages
-      const pdfObject = pdfObjectRef.current;
-      if (pdfObject) {
-        if (pdfObject.contentDocument) {
-          handlePDFLoad();
-        } else {
-          pdfObject.addEventListener("load", handlePDFLoad);
-          return () => pdfObject.removeEventListener("load", handlePDFLoad);
-        }
-      }
-    }
   }, [isOpen]);
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
 
   if (!isOpen) return null;
 
@@ -101,8 +31,7 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center 
-          bg-black bg-opacity-70 backdrop-blur-sm p-2 sm:p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm p-2 sm:p-4"
         onClick={onClose}
       >
         <motion.div
@@ -111,11 +40,11 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
           exit={{ scale: 0.9 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           className={`
-            bg-white rounded-2xl shadow-2xl overflow-hidden
+            bg-white rounded-2xl shadow-2xl overflow-hidden 
             ${
               isFullScreen
                 ? "w-full h-full"
-                : "w-full sm:w-5/6 sm:max-w-4xl h-5/6"
+                : "w-full sm:w-5/6 sm:max-w-4xl h-[90vh] sm:h-5/6"
             }
             transition-all duration-300 relative flex flex-col
           `}
@@ -126,77 +55,57 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
             <h2 className="text-lg sm:text-2xl font-bold text-gray-800 truncate">
               Election Manifesto
             </h2>
+
             {/* Control Buttons */}
             <div className="flex items-center space-x-1 sm:space-x-2">
               <button
                 onClick={() => setIsFullScreen(!isFullScreen)}
-                className="hover:bg-gray-200 text-gray-600 p-1 sm:p-2 rounded-full"
+                className="hover:bg-gray-200 p-1 sm:p-2 rounded-full"
               >
-                {isFullScreen ? <Minimize size={16} /> : <Expand size={16} />}
+                {isFullScreen ? (
+                  <Minimize size={16} className="text-gray-800" />
+                ) : (
+                  <Expand size={16} className="text-gray-800" />
+                )}
               </button>
+
               <a
                 href={ManifestoPDF}
                 download
-                className="hover:bg-gray-200 text-gray-600 p-1 sm:p-2 rounded-full"
+                className="hover:bg-gray-200 p-1 sm:p-2 rounded-full"
               >
-                <Download size={16} className="text-gray-600" />
+                <Download size={16} className="text-gray-800" />
               </a>
+
               <button
                 onClick={onClose}
                 className="hover:bg-red-100 p-1 sm:p-2 rounded-full text-gray-600 hover:text-red-600"
               >
-                <X size={16} className="text-gray-600" />
+                <X size={16} />
               </button>
             </div>
           </div>
 
           {/* PDF Viewer */}
-          <div className="flex-grow overflow-auto relative">
-            <object
-              ref={pdfObjectRef}
-              data={ManifestoPDF}
-              type="application/pdf"
-              width="100%"
-              height="100%"
+          <div className="flex-grow overflow-auto">
+            <iframe
+              src={ManifestoPDF}
               className="w-full h-full"
-            >
-              <p className="text-center p-4">
-                Your browser doesn't support PDF viewing.
-                <a
-                  href={ManifestoPDF}
-                  download
-                  className="text-blue-600 underline ml-2"
-                >
-                  Download the manifesto
-                </a>
-              </p>
-            </object>
-
-            {/* Mobile Pagination */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center space-x-4 sm:hidden">
-              <button
-                onClick={handlePreviousPage}
-                disabled={currentPage <= 1}
-                className="bg-gray-200 p-2 rounded-full disabled:opacity-50"
+              title="Election Manifesto"
+            ></iframe>
+            <p className="text-center p-4 text-sm sm:text-base">
+              Your browser doesn't support PDF viewing.
+              <a
+                href={ManifestoPDF}
+                download
+                className="text-blue-600 underline ml-2"
               >
-                <ChevronLeft size={20} />
-              </button>
-              <span className="text-sm text-gray-700">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage >= totalPages}
-                className="bg-gray-200 p-2 rounded-full disabled:opacity-50"
-              >
-                <ChevronRight size={20} />
-              </button>
-            </div>
+                Download the manifesto
+              </a>
+            </p>
           </div>
         </motion.div>
       </motion.div>
     </AnimatePresence>
   );
 };
-
-export default PDFModal;

@@ -4,7 +4,7 @@ import { Users, FileText, Play, ArrowRight } from "lucide-react";
 import { PDFModal } from "./PDFModal";
 import { VideoModal } from "./VideoModal";
 import { teamMembers } from "../data/TeamMembersData";
-import NSULogo from "../assets/images/logo.jpg";
+import NSULogo from "../assets/images/logo.jpeg";
 import Video from "../assets/videos/AQMgQnk_j5fhc1O1yXRMivFxRi58ctpoKpEaHUJAe_408aQJw-Y3B1Wuwwfe01v62f3Jr71zCzbMUosJNleoO5rL.mp4";
 
 // Enhanced Action Button Type

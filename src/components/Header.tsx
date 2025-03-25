@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import NSULogo from "../assets/images/logo.jpg";
+import NSULogo from "../assets/images/logo.jpeg";
 import CongressLogo from "../assets/images/COngressLogo.jpg";
 
 const Header: React.FC = () => {
