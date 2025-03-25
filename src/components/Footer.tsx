@@ -1,5 +1,5 @@
 import React from "react";
-import { Facebook, Phone } from "lucide-react";
+import { Facebook, Instagram, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Footer: React.FC = () => {
@@ -7,6 +7,10 @@ const Footer: React.FC = () => {
     {
       icon: Facebook,
       href: "https://www.facebook.com/binod.joshi.79",
+    },
+    {
+      icon: Instagram,
+      href: "https://www.instagram.com/j.binod11",
     },
   ];
 

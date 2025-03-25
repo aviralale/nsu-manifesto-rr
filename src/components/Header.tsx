@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import NSULogo from "../assets/images/logo.jpeg";
 import CongressLogo from "../assets/images/COngressLogo.jpg";
+import PresidentCV from "../assets/pdfs/president-details.pdf"; // Add your PDF path
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,10 +22,10 @@ const Header: React.FC = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-emerald-500 to-rose-500 
-                       text-white p-2 rounded-full 
-                       hover:from-emerald-600 hover:to-rose-600 
-                       transition-all shadow-md flex gap-2"
+            className="bg-gradient-to-r from-emerald-500 to-rose-500
+             text-white p-2 rounded-full
+             hover:from-emerald-600 hover:to-rose-600
+             transition-all shadow-md flex gap-2"
           >
             <motion.img
               src={CongressLogo}
@@ -55,21 +56,47 @@ const Header: React.FC = () => {
             >
               <Link
                 to={link.path}
-                className="text-emerald-800 hover:text-rose-600 
-                           font-medium transition-colors relative 
-                           after:content-[''] after:absolute after:bottom-[-4px] 
-                           after:left-0 after:w-0 after:h-0.5 
-                           after:bg-rose-600 after:transition-all 
-                           hover:after:w-full"
+                className="text-emerald-800 hover:text-rose-600
+                 font-medium transition-colors relative
+                 after:content-[''] after:absolute after:bottom-[-4px]
+                 after:left-0 after:w-0 after:h-0.5
+                 after:bg-rose-600 after:transition-all
+                 hover:after:w-full"
               >
                 {link.label}
               </Link>
             </motion.div>
           ))}
+
+          {/* CV Download Button for Desktop */}
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <a
+              href={PresidentCV}
+              download
+              className="text-emerald-800 hover:text-rose-600
+               font-medium transition-colors flex items-center gap-2
+               relative after:content-[''] after:absolute after:bottom-[-4px]
+               after:left-0 after:w-0 after:h-0.5
+               after:bg-rose-600 after:transition-all
+               hover:after:w-full"
+            >
+              <FileText size={16} />
+              President Details
+            </a>
+          </motion.div>
         </nav>
 
         {/* Mobile Menu Toggle */}
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center space-x-2">
+          {/* Mobile CV Download Button */}
+          <a
+            href={PresidentCV}
+            download
+            className="text-emerald-800 hover:text-rose-600"
+          >
+            <FileText size={20} />
+          </a>
+
           <motion.button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             whileTap={{ scale: 0.9 }}
@@ -94,13 +121,25 @@ const Header: React.FC = () => {
                 <Link
                   key={index}
                   to={link.path}
-                  className="text-emerald-800 hover:text-rose-600 
-                             font-medium transition-colors text-lg"
+                  className="text-emerald-800 hover:text-rose-600
+                   font-medium transition-colors text-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
+
+              {/* CV Download in Mobile Menu */}
+              <a
+                href={PresidentCV}
+                download
+                className="text-emerald-800 hover:text-rose-600
+                 font-medium transition-colors text-lg flex items-center gap-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <FileText size={20} />
+                President Details
+              </a>
             </nav>
           </motion.div>
         )}
