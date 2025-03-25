@@ -1,4 +1,14 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Kalimati";
+  src: url("/path/to/Kalimati.ttf") format("truetype");
+}
+
+.kalimati {
+  font-family: "Kalimati";
+}
+
 body {
   /* @apply bg-background text-gray-800 font-sans; */
 }

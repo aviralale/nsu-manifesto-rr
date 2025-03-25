@@ -1,67 +1,65 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, FileText, Play, ArrowRight } from "lucide-react";
-import { PDFModal } from "./PDFModal";
-import { VideoModal } from "./VideoModal";
+import { Users, Play, ArrowRight, Download } from "lucide-react";
 import { teamMembers } from "../data/TeamMembersData";
 import NSULogo from "../assets/images/logo.jpeg";
 import Video from "../assets/videos/AQMgQnk_j5fhc1O1yXRMivFxRi58ctpoKpEaHUJAe_408aQJw-Y3B1Wuwwfe01v62f3Jr71zCzbMUosJNleoO5rL.mp4";
+import Manifesto from "../assets/pdfs/election-manifesto.pdf"; // Add your manifesto PDF path
+import { VideoModal } from "./VideoModal";
 
 // Enhanced Action Button Type
 type ActionButtonType = {
   icon: React.ElementType;
   text: string;
+  title?: string;
   variant: string;
   onClick?: () => void;
   description?: string;
 };
 
 const HeroSection: React.FC = () => {
-  const [isManifestoModalOpen, setIsManifestoModalOpen] = useState(false);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<"overview" | "team">(
     "team"
   );
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   // Centralized Action Buttons Configuration
   const actionButtons: ActionButtonType[] = [
     {
       icon: Users,
       text: "Our Team",
+      title: "हाम्रो उम्मेदवारहरू",
       variant: "emerald",
       description: "Meet our dedicated student leaders",
       onClick: () => setActiveSection("team"),
     },
     {
-      icon: FileText,
-      text: "Election Manifesto",
+      icon: Download,
+      text: "Download Manifesto",
       variant: "rose",
       description: "Our vision and commitment",
-      onClick: () => setIsManifestoModalOpen(true),
+      onClick: () => window.open(Manifesto, "_blank"),
     },
     {
       icon: Play,
       text: "Watch Video",
       variant: "emerald",
-      description: "Discover our journey",
+      description: "Discover out journey",
       onClick: () => setIsVideoModalOpen(true),
     },
   ];
 
-  // Organize Leadership Members
+  // Existing getLeadershipMembers logic remains the same
   const getLeadershipMembers = () => {
-    // Separate priority and non-priority leadership members
     const priorityMember = teamMembers.find((member) => member.priority);
     const leadershipMembers = teamMembers.filter((member) =>
       ["सचिव", "अध्यक्ष", "कोषाध्यक्ष"].includes(member.role)
     );
 
-    // Remove priority member from current position if exists
     const filteredMembers = leadershipMembers.filter(
       (member) => member.name !== priorityMember?.name
     );
 
-    // Return members with priority member potentially added later
     return priorityMember
       ? [priorityMember, ...filteredMembers]
       : leadershipMembers;
@@ -211,40 +209,46 @@ const HeroSection: React.FC = () => {
               transition={{ duration: 0.5 }}
               className="space-y-12"
             >
+              <h1 className="text-5xl font-semibold kalimati text-center">
+                {actionButtons[0].title}
+              </h1>
               {/* Top Tier: Leadership */}
               <motion.div
                 className="grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center 
-                           sm:grid-cols-2 lg:grid-cols-3"
+                       sm:grid-cols-2 lg:grid-cols-3"
               >
                 {getLeadershipMembers().map((member, index) => (
                   <motion.div
                     key={index}
                     whileHover={{ scale: 1.05 }}
                     className={`
-                      bg-white/10 backdrop-blur-md border border-white/20 w-full
-                      rounded-2xl p-6 text-center shadow-xl transition-all
-                      ${
-                        member.priority
-                          ? "md:col-span-full lg:col-span-1 sm:order-first md:order-1"
-                          : member.role === "कोषाध्यक्ष"
-                          ? "sm:order-2 md:order-first"
-                          : member.role === "सचिव"
-                          ? "sm:order-3 md-order-3"
-                          : ""
-                      }
-                      ${member.role === "अध्यक्ष" ? "scale-110" : ""}
-                    `}
+                  bg-white/10 backdrop-blur-md border border-white/20 w-full
+                  rounded-2xl p-6 text-center shadow-xl transition-all
+                  ${
+                    member.priority
+                      ? "md:col-span-full lg:col-span-1 sm:order-first md:order-1"
+                      : member.role === "कोषाध्यक्ष"
+                      ? "sm:order-2 md:order-first"
+                      : member.role === "सचिव"
+                      ? "sm:order-3 md-order-3"
+                      : ""
+                  }
+                  ${member.role === "अध्यक्ष" ? "scale-110" : ""}
+                `}
                   >
                     <div className="mx-auto w-40 h-40 mb-4 relative group">
                       <img
                         src={member.image}
                         alt={member.name}
                         className="w-full h-full object-cover object-top rounded-full 
-                               border-4 border-emerald-500/50 grayscale-0 
-                               transition-all duration-300"
+                           border-4 border-emerald-500/50 grayscale-0 
+                           transition-all duration-300"
                       />
                     </div>
-                    <h3 className="text-xl font-bold text-white tracking-tight">
+                    <h3
+                      className="text-xl font-bold text-white tracking-tight"
+                      style={{ fontFamily: "Kalimati, sans-serif" }}
+                    >
                       {member.name}
                     </h3>
                     <p className="text-sm text-rose-200 uppercase tracking-widest">
@@ -257,7 +261,7 @@ const HeroSection: React.FC = () => {
               {/* Sadasya Members */}
               <div className="mt-12">
                 <h2 className="text-2xl font-bold text-center mb-8 text-emerald-200">
-                  Pratyakshya Tarfa Sadasya Haru
+                  प्रत्यक्ष तर्फ सदस्यहरू
                 </h2>
                 <motion.div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
                   {teamMembers
@@ -267,19 +271,22 @@ const HeroSection: React.FC = () => {
                         key={index}
                         whileHover={{ scale: 1.05 }}
                         className="bg-white/5 backdrop-blur-md border border-white/10 
-                               rounded-xl p-4 text-center shadow-lg transition-all 
-                               hover:bg-white/10 w-full"
+                           rounded-xl p-4 text-center shadow-lg transition-all 
+                           hover:bg-white/10 w-full"
                       >
                         <div className="relative mx-auto w-28 h-28 mb-3">
                           <img
                             src={member.image}
                             alt={member.name}
                             className="w-full h-full object-cover object-top rounded-full 
-                                   border-3 border-emerald-500/30 grayscale-0 
-                                   transition-all"
+                               border-3 border-emerald-500/30 grayscale-0 
+                               transition-all"
                           />
                         </div>
-                        <h3 className="text-base font-semibold text-white truncate">
+                        <h3
+                          className="text-base font-semibold text-white truncate"
+                          style={{ fontFamily: "Kalimati, sans-serif" }}
+                        >
                           {member.name}
                         </h3>
                         <p className="text-xs text-rose-200 uppercase tracking-wider">
@@ -294,11 +301,6 @@ const HeroSection: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Modals */}
-      <PDFModal
-        isOpen={isManifestoModalOpen}
-        onClose={() => setIsManifestoModalOpen(false)}
-      />
       <VideoModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
