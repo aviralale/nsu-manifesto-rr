@@ -21,7 +21,7 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -31,7 +31,7 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm p-2 sm:p-4"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm p-2 md:p-4"
         onClick={onClose}
       >
         <motion.div
@@ -40,27 +40,27 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
           exit={{ scale: 0.9 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           className={`
-            bg-white rounded-2xl shadow-2xl overflow-hidden 
+            bg-white rounded-2xl shadow-2xl overflow-hidden
             ${
               isFullScreen
                 ? "w-full h-full"
-                : "w-full sm:w-5/6 sm:max-w-4xl h-[90vh] sm:h-5/6"
+                : "w-full md:w-5/6 md:max-w-4xl h-[90vh] md:h-5/6"
             }
             transition-all duration-300 relative flex flex-col
           `}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex justify-between items-center p-3 sm:p-4 bg-gray-100 border-b">
-            <h2 className="text-lg sm:text-2xl font-bold text-gray-800 truncate">
+          <div className="flex justify-between items-center p-3 md:p-4 bg-gray-100 border-b">
+            <h2 className="text-lg md:text-2xl font-bold text-gray-800 truncate">
               Election Manifesto
             </h2>
-
             {/* Control Buttons */}
-            <div className="flex items-center space-x-1 sm:space-x-2">
+            <div className="flex items-center space-x-1 md:space-x-2">
               <button
                 onClick={() => setIsFullScreen(!isFullScreen)}
-                className="hover:bg-gray-200 p-1 sm:p-2 rounded-full"
+                className="hover:bg-gray-200 p-1 md:p-2 rounded-full"
+                aria-label={isFullScreen ? "Minimize" : "Expand"}
               >
                 {isFullScreen ? (
                   <Minimize size={16} className="text-gray-800" />
@@ -68,18 +68,18 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
                   <Expand size={16} className="text-gray-800" />
                 )}
               </button>
-
               <a
                 href={ManifestoPDF}
                 download
-                className="hover:bg-gray-200 p-1 sm:p-2 rounded-full"
+                className="hover:bg-gray-200 p-1 md:p-2 rounded-full"
+                aria-label="Download PDF"
               >
                 <Download size={16} className="text-gray-800" />
               </a>
-
               <button
                 onClick={onClose}
-                className="hover:bg-red-100 p-1 sm:p-2 rounded-full text-gray-600 hover:text-red-600"
+                className="hover:bg-red-100 p-1 md:p-2 rounded-full text-gray-600 hover:text-red-600"
+                aria-label="Close"
               >
                 <X size={16} />
               </button>
@@ -92,8 +92,9 @@ export const PDFModal: React.FC<PDFModalProps> = ({ isOpen, onClose }) => {
               src={ManifestoPDF}
               className="w-full h-full"
               title="Election Manifesto"
+              aria-label="PDF Viewer"
             ></iframe>
-            <p className="text-center p-4 text-sm sm:text-base">
+            <p className="text-center p-4 text-sm md:text-base">
               Your browser doesn't support PDF viewing.
               <a
                 href={ManifestoPDF}
