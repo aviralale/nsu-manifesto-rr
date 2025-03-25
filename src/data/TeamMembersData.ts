@@ -20,12 +20,12 @@ export const teamMembers: TeamMember[] = [
   { name: "अञ्जन बस्नेत", role: "सचिव", image: SachivImage },
   { name: "विनोद राज जोशी", role: "अध्यक्ष", image: SabhapatiImage },
   { name: "शारदा पौडेल (सिमा)", role: "कोषाध्यक्ष", image: KosaadakshyaImage },
+  { name: "शेखर रोकाया", role: "सदस्य", image: SekharSadasya },
   {
     name: "हिमेन्द्र नाथ शर्मा (विशाल)",
     role: "सदस्य",
     image: HimendraSadasya,
   },
-  { name: "शेखर रोकाया", role: "सदस्य", image: SekharSadasya },
   { name: "प्रेरणा शाही", role: "सदस्य", image: PreranaSadasya },
   { name: "संगिता खत्री", role: "सदस्य", image: SangitaSadasya },
   { name: "लोकेश बुढा", role: "सदस्य", image: LokeshSadasya },

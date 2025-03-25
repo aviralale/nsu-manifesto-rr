@@ -32,8 +32,7 @@ const Footer: React.FC = () => {
               Nepal Students' Union
             </h3>
             <p className="text-rose-100 text-base leading-relaxed opacity-80">
-              Empowering youth through education, research, and community
-              engagement. Transforming potential into leadership and innovation.
+              #परिवर्तनसम्भवछ
             </p>
           </div>
 
@@ -85,7 +84,7 @@ const Footer: React.FC = () => {
         <div className="mt-12 pt-8 border-t border-emerald-800/30 text-center">
           <p className="text-sm text-rose-200 opacity-70">
             &copy; {new Date().getFullYear()} Nepal Students' Union. All rights
-            reserved. Empowering Students, Transforming Futures.
+            reserved. #परिवर्तनसम्भवछ
           </p>
         </div>
       </div>
